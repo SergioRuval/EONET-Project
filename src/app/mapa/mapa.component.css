@@ -1,0 +1,8 @@
+.map {
+    background-color: brown;
+    width: 70%;
+}
+
+agm-map {
+    height: 300px;
+}

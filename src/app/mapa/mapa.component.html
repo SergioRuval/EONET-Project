@@ -1,11 +1,11 @@
 <div class="cont1">
     <div class="map">
-        <!-- dkjsabkcass
-            <h1>{{ title }}</h1>
+        <google-map height="400px" width="750px" [center]="center" [zoom]="zoom" (mapClick)="moveMap($event)"
+            (mapMousemove)="move($event)">
+        </google-map>
 
-        <agm-map [latitude]="51.678418" [longitude]="51.678418">
-            <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
-        </agm-map> -->
+        <div>Latitude: {{display?.lat}}</div>
+        <div>Longitude: {{display?.lng}}</div>
     </div>
     <div class="opciones">
         <select class="form-select drop1" aria-label="Default select example">

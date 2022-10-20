@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { EnoetService } from '../services/enoet.service';
 
 @Component({
   selector: 'app-mapa',
@@ -7,9 +8,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MapaComponent implements OnInit {
 
-  constructor() { }
+  eventos: any = [];
+  coordenadas: any;
+
+  constructor(private service: EnoetService) { }
 
   ngOnInit(): void {
+    this.service.getEvents()
+      .subscribe(response => {
+        this.eventos = response;
+        console.log(this.eventos);
+      });
   }
 
   display: any;
@@ -24,5 +33,9 @@ export class MapaComponent implements OnInit {
     move(event: google.maps.MapMouseEvent) {
         if (event.latLng != null) this.display = event.latLng.toJSON();
     }
+
+  obtenerCoordenadas(){
+    
+  }
 
 }

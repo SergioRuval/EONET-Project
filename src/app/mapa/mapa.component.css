@@ -1,6 +1,7 @@
 .map {
     background-color: brown;
     width: 70%;
+    height: 800px;
 }
 
 agm-map {

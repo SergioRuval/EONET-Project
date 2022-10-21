@@ -1,34 +1,46 @@
 <div class="cont1">
     <div class="map">
-        <google-map height="400px" width="100%" [center]="center" [zoom]="zoom" (mapClick)="moveMap($event)"
+        <google-map height="100%" width="100%" [center]="center" [zoom]="zoom" (mapClick)="moveMap($event)"
             (mapMousemove)="move($event)">
         </google-map>
 
         <div>Latitude: {{display?.lat}}</div>
         <div>Longitude: {{display?.lng}}</div>
     </div>
-    <div class="opciones">
-        <select class="form-select drop1" aria-label="Default select example">
-            <option selected>Country</option>
-            <option value="1">One</option>
-            <option value="2">Two</option>
-            <option value="3">Three</option>
-        </select>
-        <br>
-        <select class="form-select drop1" aria-label="Default select example">
-            <option selected>Date</option>
-            <option value="1">One</option>
-            <option value="2">Two</option>
-            <option value="3">Three</option>
-        </select>
-        <br>
-        <select class="form-select drop1" aria-label="Default select example">
-            <option selected>Event Type</option>
-            <option value="1">One</option>
-            <option value="2">Two</option>
-            <option value="3">Three</option>
-        </select>
+    <div class="cont2">
+        <div class="opciones">
+            <select class="form-select drop1" aria-label="Default select example">
+                <option selected>Country</option>
+                <option value="1">One</option>
+                <option value="2">Two</option>
+                <option value="3">Three</option>
+            </select>
+            <br>
+            <select class="form-select drop1" aria-label="Default select example">
+                <option selected>Date</option>
+                <option value="1">One</option>
+                <option value="2">Two</option>
+                <option value="3">Three</option>
+            </select>
+            <br>
+            <select class="form-select drop1" aria-label="Default select example">
+                <option selected>Event Type</option>
+                <option value="1">One</option>
+                <option value="2">Two</option>
+                <option value="3">Three</option>
+            </select>
 
+        </div>
+        <div class="weather">
+            <input type="text" [(ngModel)]="city" class="form-control fc1">
+            <button (click)="buscarClima()" class="btn btn-secondary">Buscar</button>
+            <h5><p>Lugar: {{name1}}</p>
+            <p>Temperatura: {{temp1}}</p>
+            <p>Sensacion Termica: {{st1}}</p>
+            <p>Humedad: {{hum1}}%</p>
+            <p>{{city}}</p></h5>
+        </div>
     </div>
+
     <div class="b-example-divider"></div>
 </div>

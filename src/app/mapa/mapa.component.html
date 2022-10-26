@@ -1,7 +1,7 @@
 <div class="cont1">
     <div class="map">
         <google-map height="100%" width="100%" [center]="center" [zoom]="zoom" (mapClick)="moveMap($event)"
-            (mapMousemove)="move($event)">
+            (mapMousemove)="move($event)" id="map">
         </google-map>
 
         <div>Latitude: {{display?.lat}}</div>

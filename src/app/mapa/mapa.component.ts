@@ -17,7 +17,17 @@ export class MapaComponent implements OnInit {
     this.service.getEvents()
       .subscribe(response => {
         this.eventos = response;
-        console.log(this.eventos);
+        //console.log(this.eventos.events);
+        this.eventos.events.forEach((element: { geometry: any; }) => {
+          console.log(element.geometry[0].coordinates)
+
+          var coordinates = { lat: element.geometry[0].coordinates[0], lng: element.geometry[0].coordinates[1]}
+          new google.maps.Marker({
+            position: coordinates,
+            
+          })
+          
+        });
       });
   }
 

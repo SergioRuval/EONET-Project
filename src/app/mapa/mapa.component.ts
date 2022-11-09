@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { EnoetService } from '../services/enoet.service';
 import {HttpClientModule} from '@angular/common/http';
 import {HttpClient} from '@angular/common/http'
+import { query } from '@angular/animations';
 
 @Component({
   selector: 'app-mapa',
@@ -12,43 +13,74 @@ export class MapaComponent implements OnInit {
 
   eventos: any = [];
   coordenadas: any;
+  mapa: google.maps.Map | undefined
+  marcadores: google.maps.Marker[] = []
 
-  constructor(private service: EnoetService, private http: HttpClient) { }
+  fechaInicio: any
+  fechaFin: any
+
+  constructor(private service: EnoetService, private http: HttpClient) {}
+
 
   ngOnInit(): void {
+    this.mapa = new google.maps.Map(
+      document.getElementById("map") as HTMLElement,
+      {
+        zoom: 4,
+        center: {
+            lat: 24,
+            lng: 12
+        }
+      }
+    )
+
     this.service.getEvents()
       .subscribe(response => {
         this.eventos = response;
-        //console.log(this.eventos.events);
-        this.eventos.events.forEach((element: { geometry: any; }) => {
-          console.log(element.geometry[0].coordinates)
-
-          var coordinates = { lat: element.geometry[0].coordinates[0], lng: element.geometry[0].coordinates[1]}
-          new google.maps.Marker({
-            position: coordinates,
-            
-          })
-          
-        });
+        this.actualizarMarcadores()
       });
   }
 
-  display: any;
-    center: google.maps.LatLngLiteral = {
-        lat: 24,
-        lng: 12
-    };
-    zoom = 4;
-    moveMap(event: google.maps.MapMouseEvent) {
-        if (event.latLng != null) this.center = (event.latLng.toJSON());
-    }
-    move(event: google.maps.MapMouseEvent) {
-        if (event.latLng != null) this.display = event.latLng.toJSON();
+  obtenerEventos(){
+    var queryEventos: String = ""
+
+    if(this.fechaInicio != null && this.fechaFin != null){
+      queryEventos += `start=${this.fechaInicio}&end=${this.fechaFin}`
+      
     }
 
-  obtenerCoordenadas(){
-    
+    this.service.getEventsByQuery(queryEventos)
+      .subscribe(response => {
+        this.eventos = response
+        this.actualizarMarcadores()
+    })
+
   }
+
+  actualizarMarcadores(){
+    this.limpiarMarcadores()
+    this.eventos.events.forEach((element: any) => {
+
+      var coordinates = { lat: element.geometry[0].coordinates[1], lng: element.geometry[0].coordinates[0]}
+      var marcador = new google.maps.Marker({
+        position: coordinates,
+        map: this.mapa,
+        title: element.title
+      })
+
+      this.marcadores.push(marcador)
+      
+    });
+  }
+
+  limpiarMarcadores(){
+    for(let i = 0; i < this.marcadores.length; i++){
+      this.marcadores[i].setMap(null)
+    }
+    this.marcadores = []
+  }
+
+
   public name1:string = ""
   public temp1:string = ""
   public st1:string = ""

@@ -1,35 +1,36 @@
 <div class="cont1">
-    <div class="map">
-        <google-map height="100%" width="100%" [center]="center" [zoom]="zoom" (mapClick)="moveMap($event)"
-            (mapMousemove)="move($event)" id="map">
-        </google-map>
-
-        <div>Latitude: {{display?.lat}}</div>
-        <div>Longitude: {{display?.lng}}</div>
+    <div class="map" id="map">
+        
     </div>
     <div class="cont2">
         <div class="opciones">
-            <select class="form-select drop1" aria-label="Default select example">
-                <option selected>Country</option>
-                <option value="1">One</option>
-                <option value="2">Two</option>
-                <option value="3">Three</option>
-            </select>
-            <br>
-            <select class="form-select drop1" aria-label="Default select example">
-                <option selected>Date</option>
-                <option value="1">One</option>
-                <option value="2">Two</option>
-                <option value="3">Three</option>
-            </select>
-            <br>
-            <select class="form-select drop1" aria-label="Default select example">
-                <option selected>Event Type</option>
-                <option value="1">One</option>
-                <option value="2">Two</option>
-                <option value="3">Three</option>
-            </select>
-
+            <div class="drop1">
+                <label for="country" class="form-label">Country</label>
+                <select class="form-select" aria-label="Default select example" id="country">
+                    <option selected>Country</option>
+                    <option value="1">One</option>
+                    <option value="2">Two</option>
+                    <option value="3">Three</option>
+                </select>
+            </div>
+            <div class="drop1">
+                <label for="fechaInicio" class="form-label">Inicio</label>
+                <input class="form-control" type="date" name="fechaInicio" id="fechaInicio" [(ngModel)]="fechaInicio">
+            </div>
+            <div class="drop1">
+                <label for="fechaFin" class="form-label">Fin</label>
+                <input class="form-control" type="date" name="fechaFin" id="fechaFin" [(ngModel)]="fechaFin">
+            </div>
+            <div class="drop1">
+                <label for="eventType" class="form-label">Event Type</label>
+                <select class="form-select" aria-label="Default select example" id="eventType">
+                    <option selected>Event Type</option>
+                    <option value="1">One</option>
+                    <option value="2">Two</option>
+                    <option value="3">Three</option>
+                </select>
+            </div>
+            <button class="btn btn-secondary mt-2" (click)="obtenerEventos()">Search Events</button>
         </div>
         <div class="weather">
             <input type="text" [(ngModel)]="city" class="form-control fc1">

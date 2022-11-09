@@ -13,4 +13,9 @@ export class EnoetService {
   getEvents(){
     return this.http.get(this.url);
   }
+
+  getEventsByQuery(query: String){
+    var urlQuery = this.url + "?" + query
+    return this.http.get(urlQuery);
+  }
 }

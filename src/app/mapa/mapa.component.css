@@ -10,3 +10,13 @@ agm-map {
 .fc1{
     margin-bottom: 1%;
 }
+@media screen and (max-width: 650px) {
+    .cont1, .cont2 {
+      width: 100%;
+      display: block;
+    }
+    .map{
+        width: 100%;
+        height: 400px;
+    }
+  }

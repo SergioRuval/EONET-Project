@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { EnoetService } from '../services/enoet.service';
+import { WeatherstackService } from '../services/weatherstack.service';
 import {HttpClientModule} from '@angular/common/http';
 import {HttpClient} from '@angular/common/http'
 import { query } from '@angular/animations';
@@ -19,7 +20,7 @@ export class MapaComponent implements OnInit {
   fechaInicio: any
   fechaFin: any
 
-  constructor(private service: EnoetService, private http: HttpClient) {}
+  constructor(private service: EnoetService, private http: HttpClient, private service1: WeatherstackService) {}
 
 
   ngOnInit(): void {
@@ -88,14 +89,23 @@ export class MapaComponent implements OnInit {
   public city:string = ""
   buscarClima(){
     console.log(this.city)
-    const url='http://api.weatherstack.com/current?access_key=540219d6872b08bbbdad73466a7cd114&query=Aguascalientes';
-    this.http.get(url).subscribe((res:any)=>{
-      console.log(res)
-      console.log(res["location"]["name"]);
+    let lat= this.eventos.events[0].geometry[0].coordinates[1]
+    let lon= this.eventos.events[0].geometry[0].coordinates[0]
+    this.service1.postTemperature(lat,lon).subscribe((res:any)=>{
+      console.log(res);
       this.name1=res["location"]["name"];
       this.temp1=res["current"]["temperature"];
       this.st1=res["current"]["feelslike"];
       this.hum1=res["current"]["humidity"];
     });
+    // const url='http://api.weatherstack.com/current?access_key=540219d6872b08bbbdad73466a7cd114&query=40.7831,-73.9712';
+    // this.http.get(url).subscribe((res:any)=>{
+    //   console.log(res)
+    //   console.log(res["location"]["name"]);
+      // this.name1=res["location"]["name"];
+      // this.temp1=res["current"]["temperature"];
+      // this.st1=res["current"]["feelslike"];
+      // this.hum1=res["current"]["humidity"];
+    //});
   }
 }

@@ -1,0 +1,106 @@
+.contab {
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0;
+    
+    --opacidad-negro: 0.0;
+    background-image: linear-gradient(rgba(0, 0, 0, var(--opacidad-negro)), rgba(0, 0, 0, var(--opacidad-negro))), url("../../assets/backww.jpg");
+
+    height:fit-content;
+    background-size: cover;
+    background-position: center center;
+    width: 100% !important;
+  }
+  
+  html {
+    box-sizing: border-box;
+  }
+  
+  *, *:before, *:after {
+    box-sizing: inherit;
+  }
+  
+  .column {
+    float: left;
+    width: 30%;
+    margin-bottom: 16px;
+    padding: 0 8px;
+  }
+  
+  .card {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    margin: 8px;
+  }
+  
+  .about-section {
+    padding: 50px;
+    text-align: center;
+    background:linear-gradient(90deg, rgba(210,199,223,1) 0%, rgba(148,187,233,1) 100%);
+    color: black;
+    margin:0% !important;
+  }
+  
+  .container {
+    padding: 0 16px;
+  }
+  
+  .container::after, .row::after {
+    content: "";
+    clear: both;
+    display: flex;
+  }
+  
+  .title {
+    color: grey;
+  }
+  
+  .button {
+    border: none;
+    outline: 0;
+    display: inline-block;
+    padding: 8px;
+    color: white;
+    background-color: #000;
+    text-align: center;
+    cursor: pointer;
+    width: 100%;
+  }
+  
+  .button:hover {
+    background-color: #555;
+  }
+  
+  @media screen and (max-width: 650px) {
+    .column {
+      width: 100%;
+      display: block;
+    }
+    .ws1{
+      width: 80%;
+      height: auto;
+    }
+  }
+  .cartas{
+    
+    align-items: center;
+    justify-content: center;
+    width: 100% !important;
+  }
+  #title3{
+    color: black;
+  }
+  .nasa1{
+    height: 25vh;
+    width: auto;
+  }
+  .maps1{
+    height: 23vh;
+    width: auto;
+  }
+  
+  .apis{
+    display: block;
+    text-align: center;
+    padding-left: 1%;
+    padding-right: 1%;
+  }
+  

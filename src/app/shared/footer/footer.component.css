@@ -1,0 +1,15 @@
+.ic2{
+    height: auto;
+    width: 25%;
+  }
+  .foot{
+    height:fit-content !important;
+  }
+  @media screen and (max-width: 650px) {
+    .ic2{
+      display: none !important;
+    }
+    .centrarimg{
+      width: 100% !important;
+    }
+  }

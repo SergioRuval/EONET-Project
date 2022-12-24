@@ -11,6 +11,7 @@ import { FooterComponent } from './shared/footer/footer.component';
 import { GoogleMapsModule } from '@angular/google-maps';
 import { FormsModule } from '@angular/forms';
 import { AboutComponent } from './about/about.component';
+import { ResourcesComponent } from './resources/resources.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { AboutComponent } from './about/about.component';
     NavbarComponent,
     MapaComponent,
     FooterComponent,
-    AboutComponent
+    AboutComponent,
+    ResourcesComponent
   ],
   imports: [
     BrowserModule,

@@ -20,6 +20,13 @@ export class MapaComponent implements OnInit {
   fechaInicio: any
   fechaFin: any
 
+  public name1:string = ""
+  public temp1:string = ""
+  public st1:string = ""
+  public hum1:string = ""
+  public city:string = ""
+  public errorTemp: boolean = false
+
   constructor(private service: EnoetService, private http: HttpClient, private service1: WeatherstackService) {}
 
 
@@ -27,7 +34,7 @@ export class MapaComponent implements OnInit {
     this.mapa = new google.maps.Map(
       document.getElementById("map") as HTMLElement,
       {
-        zoom: 4,
+        zoom: 2,
         center: {
             lat: 24,
             lng: 12
@@ -61,12 +68,34 @@ export class MapaComponent implements OnInit {
   actualizarMarcadores(){
     this.limpiarMarcadores()
     this.eventos.events.forEach((element: any) => {
-
+      console.log(element);
+      
+      
+      var fecha = new Date(element.geometry[0].date)
       var coordinates = { lat: element.geometry[0].coordinates[1], lng: element.geometry[0].coordinates[0]}
       var marcador = new google.maps.Marker({
         position: coordinates,
         map: this.mapa,
         title: element.title
+      })
+
+      marcador.addListener("click", () => {
+        // this.service1.postTemperature(marcador.getPosition()?.lat(),marcador.getPosition()?.lng()).subscribe((res:any)=>{
+        //   if(res.hasOwnProperty("error")){
+        //     this.errorTemp = true
+        //   }else{
+        //     console.log(res);
+            
+        //     this.name1=res["location"]["name"];
+        //     this.temp1=res["current"]["temperature"];
+        //     this.st1=res["current"]["feelslike"];
+        //     this.hum1=res["current"]["humidity"];
+        //     this.errorTemp = false
+        //   }
+        // });
+        
+        console.log(fecha.toUTCString());
+        
       })
 
       this.marcadores.push(marcador)
@@ -81,12 +110,6 @@ export class MapaComponent implements OnInit {
     this.marcadores = []
   }
 
-
-  public name1:string = ""
-  public temp1:string = ""
-  public st1:string = ""
-  public hum1:string = ""
-  public city:string = ""
   buscarClima(){
     console.log(this.city)
     let lat= this.eventos.events[0].geometry[0].coordinates[1]
@@ -98,14 +121,6 @@ export class MapaComponent implements OnInit {
       this.st1=res["current"]["feelslike"];
       this.hum1=res["current"]["humidity"];
     });
-    // const url='http://api.weatherstack.com/current?access_key=540219d6872b08bbbdad73466a7cd114&query=40.7831,-73.9712';
-    // this.http.get(url).subscribe((res:any)=>{
-    //   console.log(res)
-    //   console.log(res["location"]["name"]);
-      // this.name1=res["location"]["name"];
-      // this.temp1=res["current"]["temperature"];
-      // this.st1=res["current"]["feelslike"];
-      // this.hum1=res["current"]["humidity"];
-    //});
   }
+
 }

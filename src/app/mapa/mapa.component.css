@@ -1,7 +1,6 @@
 .map {
     background-color: brown;
-    width: 70%;
-    height: 800px;
+    width: 80%;
 }
 
 agm-map {
@@ -10,7 +9,7 @@ agm-map {
 .fc1{
     margin-bottom: 1%;
 }
-@media screen and (max-width: 650px) {
+@media screen and (max-width: 800px) {
     .cont1, .cont2 {
       width: 100%;
       display: block;

@@ -7,7 +7,8 @@ import { ResourcesComponent } from './resources/resources.component';
 const routes: Routes = [
   { path: '', component: MapaComponent },
   {path: 'about', component: AboutComponent},
-  { path: 'resources', component: ResourcesComponent }
+  { path: 'resources', component: ResourcesComponent },
+  { path: 'mapa', component:MapaComponent}
 ];
 
 @NgModule({

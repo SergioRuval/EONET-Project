@@ -28,6 +28,7 @@ export class MapaComponent implements OnInit {
   public st1:string = ""
   public hum1:string = ""
   public city:string = ""
+  public fechae: string = ""
   public errorTemp: boolean = false
 
   constructor(private service: EnoetService, private http: HttpClient, private service1: WeatherstackService) {}
@@ -105,14 +106,35 @@ export class MapaComponent implements OnInit {
         //     this.temp1=res["current"]["temperature"];
         //     this.st1=res["current"]["feelslike"];
         //     this.hum1=res["current"]["humidity"];
+        //     this.fechae=fecha.toUTCString();
         //     this.errorTemp = false
         //   }
         // });
         
         // console.log(fecha.toUTCString());
-        
+        console.log(element.description);
+        const contentString =
+    '<div id="content">' +
+    '<div id="siteNotice">' +
+    "</div>" +
+    '<h1 id="firstHeading" class="firstHeading">'+element.title+'</h1>' +
+    '<div id="bodyContent">' +
+    "<p><b>Category: </b>"+element.categories[0].title+"</p>" +
+    "<p><b>Magnitude: </b>"+element.geometry[0].magnitudeValue+" "+element.geometry[0].magnitudeUnit+"</p>" +
+    "</div>" +
+    "</div>";
+        const infowindow = new google.maps.InfoWindow({
+          content: contentString,
+          ariaLabel: element.title,
+        });
+        infowindow.open({
+          anchor: marcador
+        });
+        infowindow.addListener('closeclick', ()=>{
+        // Handle focus manually.
+      });
       })
-
+      
       this.marcadores.push(marcador)
       
     });

@@ -12,6 +12,8 @@ import { query } from '@angular/animations';
 })
 export class MapaComponent implements OnInit {
 
+  categorias: any = []
+
   eventos: any = [];
   coordenadas: any;
   mapa: google.maps.Map | undefined
@@ -19,6 +21,7 @@ export class MapaComponent implements OnInit {
 
   fechaInicio: any
   fechaFin: any
+  categoria: any
 
   public name1:string = ""
   public temp1:string = ""
@@ -47,14 +50,26 @@ export class MapaComponent implements OnInit {
         this.eventos = response;
         this.actualizarMarcadores()
       });
+
+    this.service.getCategories()
+      .subscribe(response => {
+        var objeto: any = response
+        this.categorias = objeto["categories"]  
+      })
   }
 
   obtenerEventos(){
     var queryEventos: String = ""
+    
+    if(this.categoria != "0"){
+      queryEventos += `category=${this.categoria}&`
+    }
+
+    console.log(this.fechaInicio);
+    
 
     if(this.fechaInicio != null && this.fechaFin != null){
-      queryEventos += `start=${this.fechaInicio}&end=${this.fechaFin}`
-      
+      queryEventos += `start=${this.fechaInicio}&end=${this.fechaFin}&`
     }
 
     this.service.getEventsByQuery(queryEventos)
@@ -68,7 +83,7 @@ export class MapaComponent implements OnInit {
   actualizarMarcadores(){
     this.limpiarMarcadores()
     this.eventos.events.forEach((element: any) => {
-      console.log(element);
+      // console.log(element);
       
       
       var fecha = new Date(element.geometry[0].date)
@@ -94,7 +109,7 @@ export class MapaComponent implements OnInit {
         //   }
         // });
         
-        console.log(fecha.toUTCString());
+        // console.log(fecha.toUTCString());
         
       })
 

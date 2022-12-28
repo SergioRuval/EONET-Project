@@ -8,14 +8,19 @@ export class EnoetService {
 
   constructor(private http: HttpClient) { }
 
-  private url = 'http://localhost:8080/events';
+  private urlEventos = 'http://localhost:8080/events';
+  private urlCategorias = 'http://localhost:8080/categories';
 
   getEvents(){
-    return this.http.get(this.url);
+    return this.http.get(this.urlEventos);
+  }
+
+  getCategories(){
+    return this.http.get(this.urlCategorias)
   }
 
   getEventsByQuery(query: String){
-    var urlQuery = this.url + "?" + query
+    var urlQuery = this.urlEventos + "?" + query
     return this.http.get(urlQuery);
   }
 }

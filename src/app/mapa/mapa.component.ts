@@ -30,6 +30,7 @@ export class MapaComponent implements OnInit {
   public city:string = ""
   public fechae: string = ""
   public errorTemp: boolean = false
+  public infoWindowAnt: any=null
 
   constructor(private service: EnoetService, private http: HttpClient, private service1: WeatherstackService) {}
 
@@ -96,9 +97,25 @@ export class MapaComponent implements OnInit {
       })
 
       marcador.addListener("click", () => {
+        if(this.infoWindowAnt!=null){
+          this.infoWindowAnt.close()
+        }
         // this.service1.postTemperature(marcador.getPosition()?.lat(),marcador.getPosition()?.lng()).subscribe((res:any)=>{
+        //   var contentString:string
         //   if(res.hasOwnProperty("error")){
         //     this.errorTemp = true
+        //     this.fechae=fecha.toUTCString();
+        //     contentString =
+        //     '<div id="content">' +
+        //     '<div id="siteNotice">' +
+        //     "</div>" +
+        //     '<h4 id="firstHeading" class="firstHeading">'+element.title+'</h4>' +
+        //     '<h6 id="firstHeading" class="firstHeading">'+this.fechae+'</h6>' +
+        //     '<div id="bodyContent">' +
+        //     "<p><b>Category: </b>"+element.categories[0].title+"</p>" +
+        //     "<p><b>No weather data available</b>"+"</p>" +
+        //     "</div>" +
+        //     "</div>";
         //   }else{
         //     console.log(res);
             
@@ -108,31 +125,78 @@ export class MapaComponent implements OnInit {
         //     this.hum1=res["current"]["humidity"];
         //     this.fechae=fecha.toUTCString();
         //     this.errorTemp = false
+        //     var magnitud:string
+        //     var unidad:string
+        //     var lugar:string
+        //     var temperatura:string
+        //     var sensacion:string
+        //     var humedad:string
+
+        //     if(element.geometry[0].magnitudeValue==null){
+        //       magnitud=""
+        //       unidad= "No data available"
+
+        //     }else{
+        //       magnitud=element.geometry[0].magnitudeValue
+        //       unidad=element.geometry[0].magnitudeUnit
+        //     }
+        //     if(this.name1==null){
+        //       lugar="No data available"
+
+        //     }else{
+        //       lugar=this.name1;
+        //     }
+        //     if(this.temp1==null){
+        //       temperatura="No data available"
+
+        //     }else{
+        //       temperatura=this.temp1;
+        //     }
+        //     if(this.st1==null){
+        //       sensacion="No data available"
+
+        //     }else{
+        //       sensacion=this.st1;
+        //     }
+        //     if(this.hum1==null){
+        //       humedad="No data available"
+
+        //     }else{
+        //       humedad=this.hum1;
+        //     }
+        //     contentString =
+        //     '<div id="content">' +
+        //     '<div id="siteNotice">' +
+        //     "</div>" +
+        //     '<h4 id="firstHeading" class="firstHeading">'+element.title+'</h4>' +
+        //     '<h6 id="firstHeading" class="firstHeading">'+this.fechae+'</h6>' +
+        //     '<div id="bodyContent">' +
+        //     "<p><b>Category: </b>"+element.categories[0].title+"</p>" +
+        //     "<p><b>Magnitude: </b>"+magnitud+" "+unidad+"</p>" +
+        //     "<p><b>Place: </b>"+lugar+"</p>" +
+        //     "<p><b>Temperature: </b>"+temperatura+"</p>" +
+        //     "<p><b>Feels Like: </b>"+sensacion+"</p>" +
+        //     "<p><b>Humidity: </b>"+humedad+"</p>" +
+        //     "</div>" +
+        //     "</div>";
+        
         //   }
+        //   const infowindow = new google.maps.InfoWindow({
+        //     content: contentString,
+        //     ariaLabel: element.title,
+        //   });
+        //   infowindow.open({
+        //     anchor: marcador
+        //   });
+        //   infowindow.addListener('closeclick', ()=>{
+        //     this.infoWindowAnt=null
+        // });
+        // this.infoWindowAnt=infowindow
         // });
         
         // console.log(fecha.toUTCString());
         console.log(element.description);
-        const contentString =
-    '<div id="content">' +
-    '<div id="siteNotice">' +
-    "</div>" +
-    '<h1 id="firstHeading" class="firstHeading">'+element.title+'</h1>' +
-    '<div id="bodyContent">' +
-    "<p><b>Category: </b>"+element.categories[0].title+"</p>" +
-    "<p><b>Magnitude: </b>"+element.geometry[0].magnitudeValue+" "+element.geometry[0].magnitudeUnit+"</p>" +
-    "</div>" +
-    "</div>";
-        const infowindow = new google.maps.InfoWindow({
-          content: contentString,
-          ariaLabel: element.title,
-        });
-        infowindow.open({
-          anchor: marcador
-        });
-        infowindow.addListener('closeclick', ()=>{
-        // Handle focus manually.
-      });
+        
       })
       
       this.marcadores.push(marcador)

@@ -1,0 +1,52 @@
+.column {
+    float: left;
+    width: 50%;
+    margin-bottom: 16px;
+    padding: 0 8px;
+    border: 1px;
+    border-color: blue;
+  }
+  
+  .card {
+    margin: 8px;
+    border: 0px;
+    display: flex;
+    flex-direction: row;
+  }
+  .container {
+    padding: 0 16px;
+  }
+  
+  .container::after,
+  .row::after {
+    content: "";
+    clear: both;
+    display: table;
+  }
+  @media screen and (max-width: 650px) {
+    .column {
+      width: 100%;
+      display: block;
+    }
+  }
+  
+  .cartas {
+    width: 100% !important;
+    padding-left: 5%;
+  
+  }
+  
+  #title3 {
+    color: yellow;
+  }
+  
+  .cropped {
+    width: 150px;
+    height: 190px;
+    overflow: hidden;
+    object-fit: cover;
+  }
+  
+  .cropped img {
+    margin: -150px 0px 0px -150px;
+  }

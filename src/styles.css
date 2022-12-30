@@ -56,6 +56,7 @@
     padding: 2%;
     height: auto;
     padding-bottom: 5% !important;
+    height: 500px;
   }
   .weather{
     background-color: rgb(77, 106, 209);
@@ -65,11 +66,13 @@
   .cont1{
     display: flex;
     flex-direction: row;
+    height: 500px;
   }
   .cont2{
     width: 20%;
     display: flex;
     flex-direction: column;
+    height: 500px;
   }
   .drop1{
     width: 70% !important;

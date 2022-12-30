@@ -4,7 +4,7 @@
     </div>
     <div class="cont2">
         <div class="opciones">
-            <div class="drop1">
+            <!-- <div class="drop1">
                 <label for="country" class="form-label">Country</label>
                 <select class="form-select" aria-label="Default select example" id="country">
                     <option selected>Country</option>
@@ -12,7 +12,7 @@
                     <option value="2">Two</option>
                     <option value="3">Three</option>
                 </select>
-            </div>
+            </div> -->
             <div class="drop1">
                 <label for="fechaInicio" class="form-label">Inicio</label>
                 <input class="form-control" type="date" name="fechaInicio" id="fechaInicio" [(ngModel)]="fechaInicio">
@@ -30,7 +30,7 @@
             </div>
             <button class="btn btn-secondary mt-2" (click)="obtenerEventos()">Search Events</button>
         </div>
-        <div class="weather">
+        <!-- <div class="weather">
             <div *ngIf="errorTemp; else elseBlock">
                 <p>Error, no hay temperatura disponible para las coordenadas dadas</p>
             </div>
@@ -43,6 +43,6 @@
                 <p>Fecha: {{fechae}}</p>
             </ng-template>
             
-        </div>
+        </div> -->
     </div>
 </div>

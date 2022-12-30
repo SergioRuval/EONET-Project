@@ -211,17 +211,17 @@ export class MapaComponent implements OnInit {
     this.marcadores = []
   }
 
-  buscarClima(){
-    console.log(this.city)
-    let lat= this.eventos.events[0].geometry[0].coordinates[1]
-    let lon= this.eventos.events[0].geometry[0].coordinates[0]
-    this.service1.postTemperature(lat,lon).subscribe((res:any)=>{
-      console.log(res);
-      this.name1=res["location"]["name"];
-      this.temp1=res["current"]["temperature"];
-      this.st1=res["current"]["feelslike"];
-      this.hum1=res["current"]["humidity"];
-    });
-  }
+  // buscarClima(){
+  //   console.log(this.city)
+  //   let lat= this.eventos.events[0].geometry[0].coordinates[1]
+  //   let lon= this.eventos.events[0].geometry[0].coordinates[0]
+  //   this.service1.postTemperature(lat,lon).subscribe((res:any)=>{
+  //     console.log(res);
+  //     this.name1=res["location"]["name"];
+  //     this.temp1=res["current"]["temperature"];
+  //     this.st1=res["current"]["feelslike"];
+  //     this.hum1=res["current"]["humidity"];
+  //   });
+  // }
 
 }

@@ -24,8 +24,8 @@
             <div class="drop1">
                 <label for="eventType" class="form-label">Categoría</label>
                 <select class="form-select" aria-label="Default select example" id="eventType" [(ngModel)]="categoria">
-                    <option [selected] value="0">Categoría</option>
-                    <option *ngFor="let categoria of categorias" [value]="categoria.id">{{categoria.title}}</option>
+                    <!-- <option [selected] value="0">Categoría</option> -->
+                    <option *ngFor="let categoria of categorias" [value]="categoria.id">{{ categoria.title | titlecase }}</option>
                 </select>
             </div>
             <button class="btn btn-secondary mt-2" (click)="obtenerEventos()">Search Events</button>

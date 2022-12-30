@@ -4,6 +4,7 @@ import { WeatherstackService } from '../services/weatherstack.service';
 import {HttpClientModule} from '@angular/common/http';
 import {HttpClient} from '@angular/common/http'
 import { query } from '@angular/animations';
+import { TranslationService } from '../services/translation.service';
 
 @Component({
   selector: 'app-mapa',
@@ -32,7 +33,7 @@ export class MapaComponent implements OnInit {
   public errorTemp: boolean = false
   public infoWindowAnt: any=null
 
-  constructor(private service: EnoetService, private http: HttpClient, private service1: WeatherstackService) {}
+  constructor(private service: EnoetService, private http: HttpClient, private service1: WeatherstackService, private translationService: TranslationService) {}
 
 
   ngOnInit(): void {
@@ -56,8 +57,28 @@ export class MapaComponent implements OnInit {
     this.service.getCategories()
       .subscribe(response => {
         var objeto: any = response
-        this.categorias = objeto["categories"]  
+
+        var categorias: [] = objeto["categories"] 
+        var categoriasTraducidas: any = []
+
+        categorias.forEach((categoria, i) => {
+          this.translationService.postTranslation(categoria["title"])
+            .subscribe(response => {
+              var traduccion: any = response
+              console.log("Traducido " + traduccion["traduccion"]);
+              var categoriaTraducida = {
+                'id': categoria["id"],
+                'title': traduccion["traduccion"]
+              }
+              categoriasTraducidas.push(categoriaTraducida)
+            })
+        });
+
+        // this.categorias = objeto["categories"]  
+        this.categorias = categoriasTraducidas
       })
+
+    
   }
 
   obtenerEventos(){

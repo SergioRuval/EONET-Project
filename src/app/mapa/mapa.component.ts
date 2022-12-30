@@ -58,24 +58,26 @@ export class MapaComponent implements OnInit {
       .subscribe(response => {
         var objeto: any = response
 
-        var categorias: [] = objeto["categories"] 
-        var categoriasTraducidas: any = []
+        // var categorias: [] = objeto["categories"] 
+        // var categoriasTraducidas: any = []
 
-        categorias.forEach((categoria, i) => {
-          this.translationService.postTranslation(categoria["title"])
-            .subscribe(response => {
-              var traduccion: any = response
-              console.log("Traducido " + traduccion["traduccion"]);
-              var categoriaTraducida = {
-                'id': categoria["id"],
-                'title': traduccion["traduccion"]
-              }
-              categoriasTraducidas.push(categoriaTraducida)
-            })
-        });
+        // categorias.forEach((categoria, i) => {
+        //   this.translationService.postTranslation(categoria["title"])
+        //     .subscribe(response => {
+        //       var traduccion: any = response
+        //       console.log("Traducido " + traduccion["traduccion"]);
+        //       var categoriaTraducida = {
+        //         'id': categoria["id"],
+        //         'title': traduccion["traduccion"]
+        //       }
+        //       categoriasTraducidas.push(categoriaTraducida)
+        //     })
+        // });
 
-        // this.categorias = objeto["categories"]  
-        this.categorias = categoriasTraducidas
+        // this.categorias = categoriasTraducidas
+
+        this.categorias = objeto["categories"]  
+        
       })
 
     

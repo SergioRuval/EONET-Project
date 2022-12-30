@@ -28,7 +28,7 @@
                     <option *ngFor="let categoria of categorias" [value]="categoria.id">{{ categoria.title | titlecase }}</option>
                 </select>
             </div>
-            <button class="btn btn-secondary mt-2" (click)="obtenerEventos()">Search Events</button>
+            <button class="btn btn-secondary mt-2" (click)="obtenerEventos()">Buscar Eventos</button>
         </div>
         <!-- <div class="weather">
             <div *ngIf="errorTemp; else elseBlock">

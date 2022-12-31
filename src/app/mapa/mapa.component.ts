@@ -58,25 +58,25 @@ export class MapaComponent implements OnInit {
       .subscribe(response => {
         var objeto: any = response
 
-        // var categorias: [] = objeto["categories"] 
-        // var categoriasTraducidas: any = []
+        var categorias: [] = objeto["categories"] 
+        var categoriasTraducidas: any = []
 
-        // categorias.forEach((categoria, i) => {
-        //   this.translationService.postTranslation(categoria["title"])
-        //     .subscribe(response => {
-        //       var traduccion: any = response
-        //       console.log("Traducido " + traduccion["traduccion"]);
-        //       var categoriaTraducida = {
-        //         'id': categoria["id"],
-        //         'title': traduccion["traduccion"]
-        //       }
-        //       categoriasTraducidas.push(categoriaTraducida)
-        //     })
-        // });
+        categorias.forEach((categoria, i) => {
+          this.translationService.postTranslation(categoria["title"])
+            .subscribe(response => {
+              var traduccion: any = response
+              console.log("Traducido " + traduccion["traduccion"]);
+              var categoriaTraducida = {
+                'id': categoria["id"],
+                'title': traduccion["traduccion"]
+              }
+              categoriasTraducidas.push(categoriaTraducida)
+            })
+        });
 
-        // this.categorias = categoriasTraducidas
+        this.categorias = categoriasTraducidas
 
-        this.categorias = objeto["categories"]  
+        // this.categorias = objeto["categories"]  
         
       })
 
@@ -109,121 +109,131 @@ export class MapaComponent implements OnInit {
     this.limpiarMarcadores()
     this.eventos.events.forEach((element: any) => {
       // console.log(element);
-      
-      
-      var fecha = new Date(element.geometry[0].date)
-      var coordinates = { lat: element.geometry[0].coordinates[1], lng: element.geometry[0].coordinates[0]}
-      var marcador = new google.maps.Marker({
-        position: coordinates,
-        map: this.mapa,
-        title: element.title
-      })
 
-      marcador.addListener("click", () => {
-        if(this.infoWindowAnt!=null){
-          this.infoWindowAnt.close()
-        }
-        // this.service1.postTemperature(marcador.getPosition()?.lat(),marcador.getPosition()?.lng()).subscribe((res:any)=>{
-        //   var contentString:string
-        //   if(res.hasOwnProperty("error")){
-        //     this.errorTemp = true
-        //     this.fechae=fecha.toUTCString();
-        //     contentString =
-        //     '<div id="content">' +
-        //     '<div id="siteNotice">' +
-        //     "</div>" +
-        //     '<h4 id="firstHeading" class="firstHeading">'+element.title+'</h4>' +
-        //     '<h6 id="firstHeading" class="firstHeading">'+this.fechae+'</h6>' +
-        //     '<div id="bodyContent">' +
-        //     "<p><b>Category: </b>"+element.categories[0].title+"</p>" +
-        //     "<p><b>No weather data available</b>"+"</p>" +
-        //     "</div>" +
-        //     "</div>";
-        //   }else{
-        //     console.log(res);
+      var titulo: string = element.title
+      this.translationService.postTranslation(element.title)
+        .subscribe(response => {
+          var traduccion: any = response
+          console.log("Traducido " + traduccion["traduccion"]);
+          titulo = this.toTitleCase(traduccion["traduccion"]);
+          var categoria = this.toTitleCase(this.buscarCategoria(element.categories[0].id))
+          var fecha = new Date(element.geometry[0].date)
+          var coordinates = { lat: element.geometry[0].coordinates[1], lng: element.geometry[0].coordinates[0]}
+          
+          var marcador = new google.maps.Marker({
+            position: coordinates,
+            map: this.mapa,
+            title: titulo
+          })
+
+          console.log(categoria);
+          
+
+          marcador.addListener("click", () => {
+            if(this.infoWindowAnt!=null){
+              this.infoWindowAnt.close()
+            }
+            this.service1.postTemperature(marcador.getPosition()?.lat(),marcador.getPosition()?.lng()).subscribe((res:any)=>{
+              var contentString:string
+              if(res.hasOwnProperty("error")){
+                this.errorTemp = true
+                this.fechae=fecha.toUTCString();
+                contentString =
+                '<div id="content">' +
+                '<div id="siteNotice">' +
+                "</div>" +
+                '<h4 id="firstHeading" class="firstHeading">'+titulo+'</h4>' +
+                '<h6 id="firstHeading" class="firstHeading">'+this.fechae+'</h6>' +
+                '<div id="bodyContent">' +
+                "<p><b>Category: </b>"+categoria+"</p>" +
+                "<p><b>No hay información disponible</b>"+"</p>" +
+                "</div>" +
+                "</div>";
+              }else{
+                console.log(res);
+                
+                this.name1=res["location"]["name"];
+                this.temp1=res["current"]["temperature"];
+                this.st1=res["current"]["feelslike"];
+                this.hum1=res["current"]["humidity"];
+                this.fechae=fecha.toUTCString();
+                this.errorTemp = false
+                var magnitud:string
+                var unidad:string
+                var lugar:string
+                var temperatura:string
+                var sensacion:string
+                var humedad:string
+
+                if(element.geometry[0].magnitudeValue==null){
+                  magnitud=""
+                  unidad= "No hay información disponible"
+
+                }else{
+                  magnitud=element.geometry[0].magnitudeValue
+                  unidad=element.geometry[0].magnitudeUnit
+                }
+                if(this.name1==null){
+                  lugar="No hay información disponible"
+
+                }else{
+                  lugar=this.name1;
+                }
+                if(this.temp1==null){
+                  temperatura="No hay información disponible"
+
+                }else{
+                  temperatura=this.temp1;
+                }
+                if(this.st1==null){
+                  sensacion="No hay información disponible"
+
+                }else{
+                  sensacion=this.st1;
+                }
+                if(this.hum1==null){
+                  humedad="No hay información disponible"
+
+                }else{
+                  humedad=this.hum1;
+                }
+                contentString =
+                '<div id="content">' +
+                '<div id="siteNotice">' +
+                "</div>" +
+                '<h4 id="firstHeading" class="firstHeading">'+titulo+'</h4>' +
+                '<h6 id="firstHeading" class="firstHeading">'+this.fechae+'</h6>' +
+                '<div id="bodyContent">' +
+                "<p><b>Categoría: </b>"+categoria+"</p>" +
+                "<p><b>Magnitud: </b>"+magnitud+" "+unidad+"</p>" +
+                "<p><b>Lugar: </b>"+lugar+"</p>" +
+                "<p><b>Temperatura: </b>"+temperatura+"</p>" +
+                "<p><b>Sensación térmica: </b>"+sensacion+"</p>" +
+                "<p><b>Humedad: </b>"+humedad+"</p>" +
+                "</div>" +
+                "</div>";
             
-        //     this.name1=res["location"]["name"];
-        //     this.temp1=res["current"]["temperature"];
-        //     this.st1=res["current"]["feelslike"];
-        //     this.hum1=res["current"]["humidity"];
-        //     this.fechae=fecha.toUTCString();
-        //     this.errorTemp = false
-        //     var magnitud:string
-        //     var unidad:string
-        //     var lugar:string
-        //     var temperatura:string
-        //     var sensacion:string
-        //     var humedad:string
+              }
+              const infowindow = new google.maps.InfoWindow({
+                content: contentString,
+                ariaLabel: element.title,
+              });
+              infowindow.open({
+                anchor: marcador
+              });
+              infowindow.addListener('closeclick', ()=>{
+                this.infoWindowAnt=null
+            });
+            this.infoWindowAnt=infowindow
+            });
+            
+            // console.log(fecha.toUTCString());
+            console.log(element.description);
+            
+          })
 
-        //     if(element.geometry[0].magnitudeValue==null){
-        //       magnitud=""
-        //       unidad= "No data available"
-
-        //     }else{
-        //       magnitud=element.geometry[0].magnitudeValue
-        //       unidad=element.geometry[0].magnitudeUnit
-        //     }
-        //     if(this.name1==null){
-        //       lugar="No data available"
-
-        //     }else{
-        //       lugar=this.name1;
-        //     }
-        //     if(this.temp1==null){
-        //       temperatura="No data available"
-
-        //     }else{
-        //       temperatura=this.temp1;
-        //     }
-        //     if(this.st1==null){
-        //       sensacion="No data available"
-
-        //     }else{
-        //       sensacion=this.st1;
-        //     }
-        //     if(this.hum1==null){
-        //       humedad="No data available"
-
-        //     }else{
-        //       humedad=this.hum1;
-        //     }
-        //     contentString =
-        //     '<div id="content">' +
-        //     '<div id="siteNotice">' +
-        //     "</div>" +
-        //     '<h4 id="firstHeading" class="firstHeading">'+element.title+'</h4>' +
-        //     '<h6 id="firstHeading" class="firstHeading">'+this.fechae+'</h6>' +
-        //     '<div id="bodyContent">' +
-        //     "<p><b>Category: </b>"+element.categories[0].title+"</p>" +
-        //     "<p><b>Magnitude: </b>"+magnitud+" "+unidad+"</p>" +
-        //     "<p><b>Place: </b>"+lugar+"</p>" +
-        //     "<p><b>Temperature: </b>"+temperatura+"</p>" +
-        //     "<p><b>Feels Like: </b>"+sensacion+"</p>" +
-        //     "<p><b>Humidity: </b>"+humedad+"</p>" +
-        //     "</div>" +
-        //     "</div>";
-        
-        //   }
-        //   const infowindow = new google.maps.InfoWindow({
-        //     content: contentString,
-        //     ariaLabel: element.title,
-        //   });
-        //   infowindow.open({
-        //     anchor: marcador
-        //   });
-        //   infowindow.addListener('closeclick', ()=>{
-        //     this.infoWindowAnt=null
-        // });
-        // this.infoWindowAnt=infowindow
-        // });
-        
-        // console.log(fecha.toUTCString());
-        console.log(element.description);
-        
-      })
-      
-      this.marcadores.push(marcador)
-      
+          this.marcadores.push(marcador)
+        })
     });
   }
 
@@ -246,5 +256,22 @@ export class MapaComponent implements OnInit {
   //     this.hum1=res["current"]["humidity"];
   //   });
   // }
+
+  toTitleCase(str:string) {
+    return str.replace(
+      /\w\S*/g,
+      (txt:string) => {
+        return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+      }
+    );
+  }
+
+  buscarCategoria(id: any){
+    for(var i=0; i < this.categorias.length; i++){
+      if(this.categorias[i]["id"] == id){
+        return this.categorias[i]["title"]
+      }
+    }
+  }
 
 }
